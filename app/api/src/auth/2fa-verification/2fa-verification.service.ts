@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import twilio from 'twilio';
+import * as twilio from 'twilio';
 
 @Injectable()
 export class TwoFaVerificationService {
