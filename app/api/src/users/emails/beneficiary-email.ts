@@ -11,7 +11,7 @@ interface BeneficiaryEmailContext {
 }
 
 const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
-const heroImage = readFileSync(join(templatedir, 'templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
+const heroImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
 const helpCenterImage = readFileSync(join(templatedir, 'templates/emails/operations/beneficiary/help-centre-btn.gif')).toString('base64');
 const icon1Image = readFileSync(join(templatedir, 'templates/emails/operations/beneficiary/icon-1.gif')).toString('base64');
 
