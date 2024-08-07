@@ -1,6 +1,6 @@
 import { AttachmentJSON } from '@sendgrid/helpers/classes/attachment';
 import { readFileSync } from 'fs';
-import { join, resolve } from 'path';
+import { join } from 'path';
 import BaseEmail from '../../model/base-email';
 
 interface BeneficiaryEmailContext {
@@ -10,8 +10,9 @@ interface BeneficiaryEmailContext {
     message: string;
 }
 
-const heroImage = readFileSync(join(__dirname, process.env.TEMPLATE_PATH + 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
-// const heroImage = readFileSync(join(__dirname, process.env.TEMPLATE_PATH as string, 'templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
+const TEMPLATE_PATH = process.env.TEMPLATE_PATH || '../../';
+//const heroImage = readFileSync(join(__dirname, process.env.TEMPLATE_PATH + 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
+const heroImage = readFileSync(join(__dirname, TEMPLATE_PATH, 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
 // const heroImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
 //const heroPath = resolve(__dirname, process.env.TEMPLATE_PATH as string, 'templates/emails/operations/beneficiary/hero.gif');
 //const heroImage = readFileSync(heroPath).toString('base64');
