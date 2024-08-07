@@ -10,18 +10,25 @@ interface BeneficiaryEmailContext {
     message: string;
 }
 
-const TEMPLATE_PATH = process.env.TEMPLATE_PATH || '../../';
-console.log("111111111111111111");
-console.log(TEMPLATE_PATH);
-console.log("111111111111111111");
-//const heroImage = readFileSync(join(__dirname, process.env.TEMPLATE_PATH + 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
-const heroImage = readFileSync(join(__dirname, TEMPLATE_PATH, 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
-// const heroImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
-//const heroPath = resolve(__dirname, process.env.TEMPLATE_PATH as string, 'templates/emails/operations/beneficiary/hero.gif');
-//const heroImage = readFileSync(heroPath).toString('base64');
-//const heroImage = readFileSync(join(__dirname, '../../' + 'templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
-const helpCenterImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/help-centre-btn.gif')).toString('base64');
-const icon1Image = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/icon-1.gif')).toString('base64');
+let heroImage: string, helpCenterImage: string, icon1Image: string;
+if(process.env.NODE_ENV === 'development') {
+    heroImage = readFileSync(join(__dirname, 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
+    helpCenterImage = readFileSync(join(__dirname, 'templates/emails/operations/beneficiary/help-centre-btn.gif')).toString('base64');
+    icon1Image = readFileSync(join(__dirname, 'templates/emails/operations/beneficiary/icon-1.gif')).toString('base64');
+}
+else {
+    heroImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/hero.gif')).toString('base64');
+    helpCenterImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/help-centre-btn.gif')).toString('base64');
+    icon1Image = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/icon-1.gif')).toString('base64');
+}
+// //const heroImage = readFileSync(join(__dirname, process.env.TEMPLATE_PATH + 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
+// const heroImage = readFileSync(join(__dirname, TEMPLATE_PATH, 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
+// // const heroImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
+// //const heroPath = resolve(__dirname, process.env.TEMPLATE_PATH as string, 'templates/emails/operations/beneficiary/hero.gif');
+// //const heroImage = readFileSync(heroPath).toString('base64');
+// //const heroImage = readFileSync(join(__dirname, '../../' + 'templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
+// const helpCenterImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/help-centre-btn.gif')).toString('base64');
+// const icon1Image = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/icon-1.gif')).toString('base64');
 
 export default class BeneficiaryEmail extends BaseEmail<BeneficiaryEmailContext> {
     constructor(to: string, context: BeneficiaryEmailContext) {
