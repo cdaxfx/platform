@@ -10,6 +10,9 @@ interface BeneficiaryEmailContext {
     message: string;
 }
 
+console.log('1111111111111111111111');
+console.log(process.env.TEMPLATE_PATH);
+console.log('2222222222222222222222');
 const heroImage = readFileSync(join(__dirname, process.env.TEMPLATE_PATH + 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
 // const heroImage = readFileSync(join(__dirname, process.env.TEMPLATE_PATH as string, 'templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
 // const heroImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
