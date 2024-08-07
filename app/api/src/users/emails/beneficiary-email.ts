@@ -11,6 +11,9 @@ interface BeneficiaryEmailContext {
 }
 
 const TEMPLATE_PATH = process.env.TEMPLATE_PATH || '../../';
+console.log("111111111111111111");
+console.log(TEMPLATE_PATH);
+console.log("111111111111111111");
 //const heroImage = readFileSync(join(__dirname, process.env.TEMPLATE_PATH + 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
 const heroImage = readFileSync(join(__dirname, TEMPLATE_PATH, 'templates/emails/operations/beneficiary/hero.gif')).toString('base64');
 // const heroImage = readFileSync(join(__dirname, '../../templates/emails/operations/beneficiary/hero.gif'),).toString('base64');
