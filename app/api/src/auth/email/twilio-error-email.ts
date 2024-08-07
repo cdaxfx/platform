@@ -8,8 +8,9 @@ interface EmailContext {
     message: string;
 }
 
-const heroImage = readFileSync(join(__dirname, 'templates/emails/alert/twilio/hero.gif')).toString('base64');
-const icon1Image = readFileSync(join(__dirname, 'templates/emails/registration/welcome/icon-1.gif')).toString('base64');
+const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
+const heroImage = readFileSync(join(templatedir, 'templates/emails/alert/twilio/hero.gif')).toString('base64');
+const icon1Image = readFileSync(join(templatedir, 'templates/emails/registration/welcome/icon-1.gif')).toString('base64');
 
 export default class TwilioErrorEmail extends BaseEmail<EmailContext> {
     constructor(to: string, context: EmailContext) {

@@ -4,7 +4,8 @@ import { join } from 'path';
 import BaseEmail from '../../model/base-email';
 import { Invitation } from '@cdaxfx/tools-models';
 
-const heroImage = readFileSync(join(__dirname, 'templates/emails/registration/invitation/hero.gif')).toString('base64');
+const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
+const heroImage = readFileSync(join(templatedir, 'templates/emails/registration/invitation/hero.gif')).toString('base64');
 
 interface InvitationEmailContext {
     invitationUrl: string;

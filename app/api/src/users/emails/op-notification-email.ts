@@ -8,7 +8,8 @@ interface OPNotificationEmailContext {
     keys: any[];
 }
 
-const logoImage = readFileSync(join(__dirname, 'templates/emails/operations/openpayd/logo.gif')).toString('base64');
+const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
+const logoImage = readFileSync(join(templatedir, 'templates/emails/operations/openpayd/logo.gif')).toString('base64');
 
 export default class OPNotificationEmail extends BaseEmail<OPNotificationEmailContext> {
     constructor(context: OPNotificationEmailContext) {

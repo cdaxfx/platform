@@ -8,9 +8,10 @@ interface AccountEmailContext {
     loginUrl: string;
 }
 
-const heroImage = readFileSync(join(__dirname, 'templates/emails/operations/account/hero.gif')).toString('base64');
-const helpCenterImage = readFileSync(join(__dirname, 'templates/emails/operations/account/help-centre-btn.gif')).toString('base64');
-const icon1Image = readFileSync(join(__dirname, 'templates/emails/operations/account/icon-1.gif')).toString('base64');
+const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
+const heroImage = readFileSync(join(templatedir, 'templates/emails/operations/account/hero.gif')).toString('base64');
+const helpCenterImage = readFileSync(join(templatedir, 'templates/emails/operations/account/help-centre-btn.gif')).toString('base64');
+const icon1Image = readFileSync(join(templatedir, 'templates/emails/operations/account/icon-1.gif')).toString('base64');
 
 export default class AccountEmail extends BaseEmail<AccountEmailContext> {
     constructor(to: string, context: AccountEmailContext) {
