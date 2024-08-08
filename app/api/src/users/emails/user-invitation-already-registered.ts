@@ -11,9 +11,9 @@ if(process.env.NODE_ENV === 'development') {
     termsDocument = readFileSync(join(__dirname, 'templates/pdfs/terms_conditions.pdf')).toString('base64');
 }
 else {
-    heroImage = readFileSync(join(__dirname, '../../admintemplates/emails/registration/welcome/hero.gif')).toString('base64');
-    helpCenterImage = readFileSync(join(__dirname, '../../admintemplates/emails/registration/welcome/help-centre-btn.gif')).toString('base64');
-    icon1Image = readFileSync(join(__dirname, '../../admintemplates/emails/registration/welcome/icon-1.gif')).toString('base64');
+    heroImage = readFileSync(join(__dirname, '../../templates/emails/registration/welcome/hero.gif')).toString('base64');
+    helpCenterImage = readFileSync(join(__dirname, '../../templates/emails/registration/welcome/help-centre-btn.gif')).toString('base64');
+    icon1Image = readFileSync(join(__dirname, '../../templates/emails/registration/welcome/icon-1.gif')).toString('base64');
     termsDocument = readFileSync(join(__dirname, '../../templates/pdfs/terms_conditions.pdf')).toString('base64');
 }
 
