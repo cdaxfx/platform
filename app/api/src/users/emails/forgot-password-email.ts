@@ -7,8 +7,13 @@ interface ForgotPasswordEmailContext {
     password: string;
 }
 
-const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
-const heroImage = readFileSync(join(templatedir, 'templates/emails/registration/welcome/hero.gif')).toString('base64');
+let heroImage: string;
+if(process.env.NODE_ENV === 'development') {
+    heroImage = readFileSync(join(__dirname, 'templates/emails/registration/welcome/hero.gif')).toString('base64');
+}
+else {
+    heroImage = readFileSync(join(__dirname, '../../templates/emails/registration/welcome/hero.gif')).toString('base64');
+}
 
 export default class ForgotPasswordEmail extends BaseEmail<ForgotPasswordEmailContext> {
     constructor(to: string, password: string) {

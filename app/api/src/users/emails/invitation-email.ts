@@ -4,8 +4,13 @@ import { join } from 'path';
 import BaseEmail from '../../model/base-email';
 import { Invitation } from '@cdaxfx/tools-models';
 
-const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
-const heroImage = readFileSync(join(templatedir, 'templates/emails/registration/invitation/hero.gif')).toString('base64');
+let heroImage: string;
+if(process.env.NODE_ENV === 'development') {
+    heroImage = readFileSync(join(__dirname, 'templates/emails/registration/invitation/hero.gif')).toString('base64');
+}
+else {
+    heroImage = readFileSync(join(__dirname, '../../templates/emails/registration/invitation/hero.gif')).toString('base64');
+}
 
 interface InvitationEmailContext {
     invitationUrl: string;

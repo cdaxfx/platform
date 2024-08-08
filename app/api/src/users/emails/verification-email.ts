@@ -10,9 +10,15 @@ interface VerificationEmailContext {
     activationUrl: string;
 }
 
-const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
-const heroImage = readFileSync(join(templatedir, 'templates/emails/registration/verification/hero.gif')).toString('base64');
-const confirmButton = readFileSync(join(templatedir, 'templates/emails/registration/verification/confirm-email-btn.gif')).toString('base64');
+let heroImage: string, confirmButton: string;
+if(process.env.NODE_ENV === 'development') {
+    heroImage = readFileSync(join(__dirname, 'templates/emails/registration/verification/hero.gif')).toString('base64');
+    confirmButton = readFileSync(join(__dirname, 'templates/emails/registration/verification/confirm-email-btn.gif')).toString('base64');
+}
+else {
+    heroImage = readFileSync(join(__dirname, '../../templates/emails/registration/verification/hero.gif')).toString('base64');
+    confirmButton = readFileSync(join(__dirname, '../../templates/emails/registration/verification/confirm-email-btn.gif')).toString('base64');
+}
 
 export default class VerificationEmail extends BaseEmail<VerificationEmailContext> {
     constructor(to: string, user: User, code: string) {

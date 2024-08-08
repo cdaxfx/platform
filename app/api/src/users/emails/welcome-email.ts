@@ -7,11 +7,19 @@ interface WelcomeEmailContext {
     fullName: string;
 }
 
-const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
-const heroImage = readFileSync(join(templatedir, 'templates/emails/registration/welcome/hero.gif')).toString('base64');
-const helpCenterImage = readFileSync(join(templatedir, 'templates/emails/registration/welcome/help-centre-btn.gif')).toString('base64');
-const icon1Image = readFileSync(join(templatedir, 'templates/emails/registration/welcome/icon-1.gif')).toString('base64');
-const termsDocument = readFileSync(join(templatedir, 'templates/pdfs/terms_conditions.pdf')).toString('base64');
+let heroImage: string, helpCenterImage: string, icon1Image: string, termsDocument: string;
+if(process.env.NODE_ENV === 'development') {
+    heroImage = readFileSync(join(__dirname, 'templates/emails/registration/welcome/hero.gif')).toString('base64');
+    helpCenterImage = readFileSync(join(__dirname, 'templates/emails/registration/welcome/help-centre-btn.gif')).toString('base64');
+    icon1Image = readFileSync(join(__dirname, 'templates/emails/registration/welcome/icon-1.gif')).toString('base64');
+    termsDocument = readFileSync(join(__dirname, 'templates/pdfs/terms_conditions.pdf')).toString('base64');
+}
+else {
+    heroImage = readFileSync(join(__dirname, '../../templates/emails/registration/welcome/hero.gif')).toString('base64');
+    helpCenterImage = readFileSync(join(__dirname, '../../templates/emails/registration/welcome/help-centre-btn.gif')).toString('base64');
+    icon1Image = readFileSync(join(__dirname, '../../templates/emails/registration/welcome/icon-1.gif')).toString('base64');
+    termsDocument = readFileSync(join(__dirname, '../../templates/pdfs/terms_conditions.pdf')).toString('base64');
+}
 
 export default class WelcomeEmail extends BaseEmail<WelcomeEmailContext> {
     constructor(to: string, context: WelcomeEmailContext) {

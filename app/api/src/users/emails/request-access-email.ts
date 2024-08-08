@@ -5,8 +5,13 @@ import { join } from 'path';
 import BaseEmail from '../../model/base-email';
 import { RequestAccessDto } from '@cdaxfx/tools-models';
 
-const templatedir = join(__dirname, process.env.TEMPLATE_PATH as string);
-const logoImage = readFileSync(join(templatedir, 'templates/emails/registration/request-access/logo.png')).toString('base64');
+let logoImage: string;
+if(process.env.NODE_ENV === 'development') {
+    logoImage = readFileSync(join(__dirname, 'templates/emails/registration/request-access/logo.png')).toString('base64');
+}
+else {
+    logoImage = readFileSync(join(__dirname, '../../templates/emails/registration/request-access/logo.png')).toString('base64');
+}
 
 interface RequestAccessEmailContext {
     firstName: string;
