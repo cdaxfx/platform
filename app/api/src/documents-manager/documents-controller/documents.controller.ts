@@ -1,10 +1,10 @@
-import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Request, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Request, Res, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SkipAccountSetup } from '../../auth/skip-account-setup.decorator';
 import { SuccessResponse } from '@cdaxfx/tools-misc';
 import { DocumentsManagerService } from '../documents-manager.service';
-import { AdminRoles, ClientsRepository, DocumentsRepository } from '@cdaxfx/tools-models';
+import { AdminRoles, ClientsRepository, DocumentsRepository, Document } from '@cdaxfx/tools-models';
 import { Roles } from '../../auth/roles.decorator';
 import { AddClientDocumentDto } from '../dtos/add-client-documents.dto';
 import { RemoveClientDocumentDto } from '../dtos/remove-client-documents.dto';
@@ -31,6 +31,22 @@ export class DocumentsController {
 
         const document = await this.documentsService.upload(req.user, file);
         return new SuccessResponse({ document });
+    }
+
+    @ApiBearerAuth()
+    @Post('bulk')
+    @UseInterceptors(FilesInterceptor('files', 10))
+    async uploadBulkDocuments(@UploadedFiles() files: Express.Multer.File[], @Request() req) {
+        if(!files || files.length === 0)
+            throw new BadRequestException();
+
+        const documents: Document[] = [];
+        for(let index = 0; index < files.length; index++) {
+            const document = await this.documentsService.upload(req.user, files[index]);
+            documents.push(document);
+        }
+
+        return new SuccessResponse({ documents });
     }
 
     @ApiBearerAuth()
@@ -73,7 +89,7 @@ export class DocumentsController {
         if (!doc)
             throw new BadRequestException({ message: 'Document not found.' });
         
-        const s3Data = await this.documentsService.getDocumentFromBucket(doc.ownCloudPath);
+        const fileBuffer = await this.documentsService.getDocumentFromBucket(doc.ownCloudPath);
 
         const fileExtension = doc.originalFilename.split('.').pop() as string;
 
@@ -82,6 +98,6 @@ export class DocumentsController {
         res.setHeader('Content-Disposition', `attachment; filename=${doc.originalFilename}`);
         res.setHeader('Content-Type', contentType);
 
-        res.send(s3Data.Body);
+        res.send(fileBuffer);
     }
 }

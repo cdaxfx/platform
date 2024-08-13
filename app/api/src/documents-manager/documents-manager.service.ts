@@ -1,79 +1,77 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { Document, DocumentType, DocumentsRepository, ClientDocumentsRepository, User, S3Object, ClientDocument, Client } from '@cdaxfx/tools-models';
-import * as AWS from 'aws-sdk';
+import { Storage } from '@google-cloud/storage';
 
 @Injectable()
 export class DocumentsManagerService {
-    private s3: AWS.S3;
+    private storage: Storage;
+    private bucketName: string;
     private logger: Logger = new Logger(DocumentsManagerService.name);
 
     constructor(
         private readonly documentsRepository: DocumentsRepository,
         private readonly clientDocumentsRepository: ClientDocumentsRepository
     ) {
-        this.s3 = new AWS.S3({
-            region: 'us-east-1',
-            endpoint: process.env.AWS_IS_LOCAL ? 'http://localstack:4566' : undefined,
-            credentials: process.env.AWS_IS_LOCAL ? { accessKeyId: 'test', secretAccessKey: 'test' } : undefined
+        this.storage = new Storage({
+            projectId: process.env.GOOGLE_CLOUD_PROJECTID,
+            keyFilename: 'google_app_credentials.json'
         });
+        this.bucketName = process.env.GOOGLE_CLOUD_BUCKET_NAME ?? '';
     }
 
     async uploadImage(user: User, file: Express.Multer.File): Promise<string> {
         try {
             this.logger.log(`:: uploadImage ::`);
-            const bucketName = process.env.S3_BUCKET_NAME_IMAGES ?? '';
+
+            const bucket = this.storage.bucket(this.bucketName);
             const fileName = `image-${user.uuid}-${Date.now()}.${file.mimetype.split('/')[1]}`;
 
-            this.logger.log(`:: uploadImage ${file.originalname} to ${bucketName} ::`,);
+            this.logger.log(`:: uploadImage ${file.originalname} to ${this.bucketName} ::`);
 
-            await this.s3.upload({Bucket: bucketName, Key: `images/${fileName}`, Body: file.buffer}).promise();
+            const fileUpload = bucket.file(fileName);
+            await fileUpload.save(file.buffer, {contentType: file.mimetype, public: false});
 
             return fileName;
-        } 
-        catch (error) {
+        }
+        catch(error) {
             this.logger.error((error as any).message, (error as any).stack);
             throw new BadRequestException('File was not uploaded.');
         }
     }
 
-    async getDocumentFromBucket(key: string): Promise<S3Object> {
+    async getDocumentFromBucket(key: string): Promise<Buffer> {
         try {
-            const params = {
-                Bucket: process.env.S3_BUCKET_NAME ?? '',
-                Key: key
-            };
-            const data = await this.s3.getObject(params).promise();
-            return data as S3Object;
-        } 
+            const bucket = this.storage.bucket(this.bucketName);
+            const file = bucket.file(key);
+
+            const [fileContents] = await file.download();
+            return fileContents;
+        }
         catch (error) {
-            throw new BadRequestException(`Failed to retrieve image from S3: ${(error as any).message}`);
+            throw new BadRequestException(`Failed to retrieve image from Google Cloud Storage: ${(error as any).message}`);
         }
     }
 
     async upload(user: User, file: Express.Multer.File): Promise<Document> {
-        console.log('Upload:');
-        const bucketName = process.env.S3_BUCKET_NAME ?? '';
-        const path = `uploads/${user.username}`;
-        const destinationFilename = `${path}/${Date.now()} - ${file.originalname}`;
-
-        const params = {
-            Bucket: bucketName,
-            Key: destinationFilename,
-            Body: file.buffer
-        };
-
         try {
-            console.log(`Uploading ${file.originalname} to ${bucketName}...`);
-            await this.s3.upload(params).promise();
-            console.log('File uploaded to S3');
-            const document = Document.create(file.originalname, destinationFilename, user);
+            console.log('Upload:');
 
+            const bucket = this.storage.bucket(this.bucketName);
+            const path = `uploads/${user.username}`;
+            const destinationFilename = `${path}/${Date.now()} - ${file.originalname}`;
+            const fileUpload = bucket.file(destinationFilename);
+
+            console.log(`Uploading ${file.originalname} to ${this.bucketName}...`);
+            await fileUpload.save(file.buffer, {contentType: file.mimetype, public: true});
+            console.log('File uploaded to Google Cloud Storage');
+
+            const document = Document.create(file.originalname, destinationFilename, user);
             await this.documentsRepository.getEntityManager().persistAndFlush(document);
             console.log('Document saved to database');
 
             return document;
-        } 
-        catch (error) {
+        }
+        catch(error) {
             this.logger.error((error as any).message, (error as any).stack);
             throw new BadRequestException('File was not uploaded.');
         }
@@ -107,20 +105,18 @@ export class DocumentsManagerService {
     }
 
     async finalize(document: Document, type: DocumentType): Promise<Document> {
-        const bucketName = process.env.S3_BUCKET_NAME ?? '';
-        const oldKey = document.ownCloudPath;
-
-        const newPath = `finalized/${document.creator.username} (${document.creator.uuid})/${type} - ${new Date().toISOString()} - ${document.originalFilename}`;
-        const newKey = `${newPath}/${document.originalFilename}`;
-
         try {
-            console.log(`Copying ${oldKey} to ${newKey} into bucket ${bucketName}`);
+            const newPath = `finalized/${document.creator.username} (${document.creator.uuid})/${type} - ${new Date().toISOString()} - ${document.originalFilename}`;
+            const oldKey = document.ownCloudPath;
+            const newKey = `${newPath}/${document.originalFilename}`;
 
-            await this.s3.copyObject({Bucket: bucketName, CopySource: encodeURIComponent(`${bucketName}/${oldKey}`), Key: newKey}).promise();
+            console.log(`Copying ${oldKey} to ${newKey} into bucket ${this.bucketName}`);
 
+            const bucket = this.storage.bucket(this.bucketName);
+            await bucket.file(oldKey).copy(bucket.file(newKey));
             console.log('File copied to new location');
 
-            await this.s3.deleteObject({Bucket: bucketName, Key: oldKey}).promise();
+            await bucket.file(oldKey).delete();
             console.log('File deleted from old location');
 
             document.ownCloudPath = newKey;
@@ -128,24 +124,19 @@ export class DocumentsManagerService {
             console.log('Document saved to database');
 
             return document;
-        } 
-        catch (error) {
+        }
+        catch(error) {
             this.logger.error(`Error finalizing document: ${(error as any).message}`, (error as any).stack);
             throw new BadRequestException('Document could not be finalized.');
         }
     }
 
     async remove(document: Document) {
-        const bucketName = process.env.S3_BUCKET_NAME ?? '';
-        const params = {
-            Bucket: bucketName,
-            Key: document.ownCloudPath
-        };
-
         try {
-            await this.s3.deleteObject(params).promise();
-        } 
-        catch (error) {
+            const bucket = this.storage.bucket(this.bucketName);
+            await bucket.file(document.ownCloudPath).delete();
+        }
+        catch(error) {
             this.logger.error((error as any).message, (error as any).stack);
             throw new BadRequestException('File could not be deleted.');
         }

@@ -80,7 +80,7 @@ async function bootstrap() {
       'https://cdax.forex',
       'https://cdax.cloud',
       'https://cdax.ai',
-      'http://localhost:3000'
+      'http://localhost:3001'
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: ['Content-Type', 'Authorization'],

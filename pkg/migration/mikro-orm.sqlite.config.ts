@@ -14,7 +14,8 @@ import {
     Shareholder,
     USER_REGISTERED_ENTITIES,
     USER_CLIENTS_REGISTERED_ENTITIES,
-    TRANSACTION_REGISTERED_ENTITIES
+    TRANSACTION_REGISTERED_ENTITIES,
+    CLIENTS_METADATA_TEMP_ENTITIES
 } from '@cdaxfx/tools-models';
 
 import * as dotenv from 'dotenv';
@@ -38,6 +39,7 @@ export default defineConfig({
         ...FEES_REGISTERED_ENTITIES,
         ...USER_CLIENTS_REGISTERED_ENTITIES,
         ...TRANSACTION_REGISTERED_ENTITIES,
+        ...CLIENTS_METADATA_TEMP_ENTITIES,
         BankMetadata,
         IndividualMetadata,
         BusinessMetadata,
