@@ -14,7 +14,14 @@ export class DocumentsManagerService {
     ) {
         this.storage = new Storage({
             projectId: process.env.GOOGLE_CLOUD_PROJECTID,
-            keyFilename: 'google_app_credentials.json'
+            credentials: {
+                "client_id": "764086051850-6qr4p6gpi6hn506pt8ejuq83di341hur.apps.googleusercontent.com",
+                "client_secret": "d-FL95Q19q7MQmFpd7hHD0Ty",
+                "quota_project_id": "cdax-fx",
+                "refresh_token": "1//0eKUxMAA7SgplCgYIARAAGA4SNwF-L9IrcQz0bh8IBWfw2KnHeUuffPNwaKIymECEgGtBm0_5VG4Eiw_NiblMnCOZUvrXtOilaAQ",
+                "type": "authorized_user",
+                "universe_domain": "googleapis.com"
+            }
         });
         this.bucketName = process.env.GOOGLE_CLOUD_BUCKET_NAME ?? '';
     }
