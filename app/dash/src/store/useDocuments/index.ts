@@ -7,6 +7,7 @@ import {
   downloadClientDocumentAPI,
   linkDocumentToClientAPI,
   uploadClientDocumentAPI,
+  uploadMultiClientDocumentAPI,
 } from './fetchers';
 import {
   IDocumentsActions,
@@ -31,6 +32,23 @@ export const useDocuments = create<TUseDocuments>(() => ({
       .catch((err) => {
         setErrorState(useDocuments, 'uploadClientDocuments', err);
         return {} as IDocument;
+      })
+      .finally(() => {
+        setLoadingState(useDocuments, 'uploadClientDocuments', false);
+      });
+  },
+
+  async uploadMultiClientDocuments(file: FormData) {
+    setLoadingState(useDocuments, 'uploadClientDocuments', true);
+
+    return await uploadMultiClientDocumentAPI(file)
+      .then((res) => {
+        setLoadingState(useDocuments, 'uploadClientDocuments', false);
+        return res;
+      })
+      .catch((err) => {
+        setErrorState(useDocuments, 'uploadClientDocuments', err);
+        return [] as IDocument[];
       })
       .finally(() => {
         setLoadingState(useDocuments, 'uploadClientDocuments', false);

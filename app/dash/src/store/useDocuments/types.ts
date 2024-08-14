@@ -5,6 +5,8 @@ export interface IDocumentsStates extends IDefaultStates<IDocumentsActions> {}
 
 export interface IDocumentsActions {
   uploadClientDocuments: (file: FormData) => Promise<IDocument>;
+  
+  uploadMultiClientDocuments: (file: FormData) => Promise<IDocument[]>;
 
   deleteClientDocument: (payload: IDeleteDocumentPayload) => Promise<void>;
 
@@ -15,6 +17,7 @@ export interface IDocumentsActions {
 
 export const PATHS = {
   UPLOAD_CLIENT_DOCUMENTS: '/api/v1/documents',
+  UPLOAD_MULTI_CLIENT_DOCUMENTS: '/api/v1/documents/bulk',
   LINK_DOCUMENT_TO_CLIENT: (uuid: string) => `/api/v1/documents/client/${uuid}`,
   DELETE_DOCUMENT: (uuid: string) => `/api/v1/documents/client/${uuid}`,
   DOWNLOAD_DOCUMENT: (uuid: string) => `/api/v1/documents/${uuid}`,

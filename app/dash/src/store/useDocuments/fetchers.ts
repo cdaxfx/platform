@@ -32,6 +32,34 @@ export async function uploadClientDocumentAPI(
     throw new Error('Error uploading file');
   }
 }
+
+export async function uploadMultiClientDocumentAPI(
+  binaryFile: FormData
+): Promise<IDocument[]> {
+  const baseConfig = await getFetchBaseClient();
+  const url = baseConfig.baseURL + PATHS.UPLOAD_MULTI_CLIENT_DOCUMENTS;
+  const token = Cookies.get(process.env.NEXT_PUBLIC_JWT_COOKIE ?? '');
+
+  try {
+    const resp = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: 'POST',
+      body: binaryFile,
+    });
+
+    const res = await resp.json();
+
+    if (res.message) {
+      throw new Error('Error uploading file');
+    }
+    return res.data.documents;
+  } catch (err) {
+    throw new Error('Error uploading file');
+  }
+}
+
 export async function deleteClientDocumentAPI(payload: IDeleteDocumentPayload) {
   try {
     const res = await dataFetch({

@@ -2,8 +2,6 @@
 
 import { useMemo, useState } from 'react';
 
-import { ModalUpload } from '@/components/ModalUpload';
-
 import { useMessages } from '@/context/Messages';
 import { useNotification } from '@/context/Notification';
 
@@ -15,6 +13,8 @@ import { Button, Column, Row, Text } from '@cdaxfx/ui';
 
 import { ClientDocumentCard } from '../../../../../../components/ClientDocumentCard';
 import { HeaderClientsDetails } from '../../components/Header';
+import { ModalUploadMultiple } from '@/components/ModalUploadMultiple';
+import { ModalUpload } from '@/components/ModalUpload';
 
 interface IFileUpload {
   isVisible: boolean;
@@ -27,6 +27,7 @@ export default function Documents() {
   const { onShowNotification } = useNotification();
   const {
     uploadClientDocuments,
+    uploadMultiClientDocuments,
     linkDocumentToClient,
     deleteClientDocument,
     downloadClientDocument,
@@ -35,6 +36,12 @@ export default function Documents() {
   const { clientSelected, getClientsInfo } = useClients();
 
   const id = useMemo(() => clientSelected?.uuid ?? '', [clientSelected]);
+
+  const [multiFileSelectModal, setMultiFileSelectModal] = useState<IFileUpload>({
+    isVisible: false,
+    title: 'Please upload your document here',
+    type: EnumClientDocumentType.IdentityDocument,
+  });
 
   const [fileSelectModal, setFileSelectModal] = useState<IFileUpload>({
     isVisible: false,
@@ -46,7 +53,7 @@ export default function Documents() {
     await linkDocumentToClient({
       clientId: id,
       documentUuid: docId,
-      type: fileSelectModal.type,
+      type: multiFileSelectModal.type,
     })
       .then(async () => {
         await getClientsInfo(id);
@@ -67,6 +74,28 @@ export default function Documents() {
     await uploadClientDocuments(formData)
       .then(async (res) => {
         await linkFileToClient(res.uuid);
+        await getClientsInfo(id);
+      })
+      .catch((err) => {
+        onShowNotification({
+          type: 'ERROR',
+          message: err.message,
+          description: 'Error uploading document',
+        });
+      });
+  };
+
+  const handleMultiUpload = async (files: File[]) => {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+    }
+
+    await uploadMultiClientDocuments(formData)
+      .then(async (res) => {
+        for(let i = 0; i< res.length; i ++) {
+          await linkFileToClient(res[i].uuid);
+        }
         await getClientsInfo(id);
       })
       .catch((err) => {
@@ -212,7 +241,7 @@ export default function Documents() {
               leftIcon="plus-circle"
               roundness="rounded"
               onClick={() =>
-                setFileSelectModal((p) => ({
+                setMultiFileSelectModal((p) => ({
                   ...p,
                   isVisible: true,
                   title: 'Please upload your document here',
@@ -245,7 +274,7 @@ export default function Documents() {
                 });
               }}
               onUploadClick={() =>
-                setFileSelectModal((p) => ({
+                setMultiFileSelectModal((p) => ({
                   ...p,
                   isVisible: true,
                   title: 'Please upload your document here',
@@ -263,11 +292,24 @@ export default function Documents() {
         onClose={() =>
           setFileSelectModal((pS) => ({ ...pS, isVisible: false }))
         }
-        title={fileSelectModal.title}
+        title={multiFileSelectModal.title}
         description="All files are encrypted, ensuring greater security in data transmission"
         onConfirm={(file) => {
-          setFileSelectModal((pS) => ({ ...pS, isVisible: false }));
+          setMultiFileSelectModal((pS) => ({ ...pS, isVisible: false }));
           handleUpload(file);
+        }}
+      />
+
+      <ModalUploadMultiple
+        isVisible={multiFileSelectModal.isVisible}
+        onClose={() =>
+          setMultiFileSelectModal((pS) => ({ ...pS, isVisible: false }))
+        }
+        title={multiFileSelectModal.title}
+        description="All files are encrypted, ensuring greater security in data transmission"
+        onConfirm={(file) => {
+          setMultiFileSelectModal((pS) => ({ ...pS, isVisible: false }));
+          handleMultiUpload(file);
         }}
       />
     </>
