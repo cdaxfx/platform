@@ -40,7 +40,7 @@ export default function Documents() {
   const [multiFileSelectModal, setMultiFileSelectModal] = useState<IFileUpload>({
     isVisible: false,
     title: 'Please upload your document here',
-    type: EnumClientDocumentType.IdentityDocument,
+    type: EnumClientDocumentType.Other,
   });
 
   const [fileSelectModal, setFileSelectModal] = useState<IFileUpload>({
@@ -49,11 +49,29 @@ export default function Documents() {
     type: EnumClientDocumentType.IdentityDocument,
   });
 
-  const linkFileToClient = async (docId: string) => {
+  const linkMultiFileToClient = async (docId: string) => {
     await linkDocumentToClient({
       clientId: id,
       documentUuid: docId,
       type: multiFileSelectModal.type,
+    })
+      .then(async () => {
+        await getClientsInfo(id);
+      })
+      .catch((err) => {
+        onShowNotification({
+          type: 'ERROR',
+          message: err.message,
+          description: 'Error associating document to client',
+        });
+      });
+  };
+
+  const linkFileToClient = async (docId: string) => {
+    await linkDocumentToClient({
+      clientId: id,
+      documentUuid: docId,
+      type: fileSelectModal.type,
     })
       .then(async () => {
         await getClientsInfo(id);
@@ -93,8 +111,8 @@ export default function Documents() {
 
     await uploadMultiClientDocuments(formData)
       .then(async (res) => {
-        for(let i = 0; i< res.length; i ++) {
-          await linkFileToClient(res[i].uuid);
+        for (let i = 0; i < res.length; i++) {
+          await linkMultiFileToClient(res[i].uuid);
         }
         await getClientsInfo(id);
       })
@@ -292,10 +310,10 @@ export default function Documents() {
         onClose={() =>
           setFileSelectModal((pS) => ({ ...pS, isVisible: false }))
         }
-        title={multiFileSelectModal.title}
+        title={fileSelectModal.title}
         description="All files are encrypted, ensuring greater security in data transmission"
         onConfirm={(file) => {
-          setMultiFileSelectModal((pS) => ({ ...pS, isVisible: false }));
+          setFileSelectModal((pS) => ({ ...pS, isVisible: false }));
           handleUpload(file);
         }}
       />
