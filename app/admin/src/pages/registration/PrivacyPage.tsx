@@ -586,7 +586,7 @@ export default function PrivacyPage() {
 
 
 
-<p>You can do this by checking or unchecking certain boxes on the forms we use to collect your information, or by logging onto your account and managing your contact preferences, or by clicking on the ‘unsubscribe’ link(s) at the foot of every marketing or promotional email. You may exercise any of the above rights by contacting us at <a href="mailto:compliance@cdaxforex.com" target="_blank" rel="noreferrer noopener">compliance@cdaxforex.com</a> or by calling your Account Manager.</p>
+<p>You can do this by checking or unchecking certain boxes on the forms we use to collect your information, or by logging onto your account and managing your contact preferences, or by clicking on the ‘unsubscribe’ link(s) at the foot of every marketing or promotional email. You may exercise any of the above rights by contacting us at <a href="mailto:compliance@cdax.forex" target="_blank" rel="noreferrer noopener">compliance@cdax.forex</a> or by calling your Account Manager.</p>
 
 
 
@@ -602,7 +602,7 @@ export default function PrivacyPage() {
 
 
 
-<p>If you want to exercise your right to access your information or have any questions about this Privacy Policy, CDAX’s information practices, or your dealings with CDAX, you can contact us by calling the customer service number located on our website, sending an email to <a href="mailto:compliance@cdaxforex.com" target="_blank" rel="noreferrer noopener">compliance@cdaxforex.com</a> or by writing to us at CDAX Limited, 27 Hope Street, Douglas, Isle of Man, IM1 1AR.</p>
+<p>If you want to exercise your right to access your information or have any questions about this Privacy Policy, CDAX’s information practices, or your dealings with CDAX, you can contact us by calling the customer service number located on our website, sending an email to <a href="mailto:compliance@cdax.forex" target="_blank" rel="noreferrer noopener">compliance@cdax.forex</a> or by writing to us at CDAX Limited, 27 Hope Street, Douglas, Isle of Man, IM1 1AR.</p>
 
 
 
@@ -610,7 +610,7 @@ export default function PrivacyPage() {
 
 
 
-<p>If you believe that we have breached a privacy law with which we should comply, please <a>send an email to </a><a href="mailto:compliance@cdaxforex.com" target="_blank" rel="noreferrer noopener">compliance@cdaxforex.com</a>. We aim to respond in a reasonable time, normally within 30 days. Our Compliance team and Data Protection Officer will look after your complaint and will give you additional information about how it will be managed.</p>
+<p>If you believe that we have breached a privacy law with which we should comply, please <a>send an email to </a><a href="mailto:compliance@cdax.forex" target="_blank" rel="noreferrer noopener">compliance@cdax.forex</a>. We aim to respond in a reasonable time, normally within 30 days. Our Compliance team and Data Protection Officer will look after your complaint and will give you additional information about how it will be managed.</p>
 
 
 

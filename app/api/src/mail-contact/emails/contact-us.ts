@@ -22,7 +22,7 @@ export default class ContactUsEmail extends BaseEmail<ContactUsEmailContext> {
     constructor(to, context: ContactUsEmailContext) {
         super(
             to,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'Contact Us',
             'emails/operations/contact/us',
             context

@@ -970,7 +970,7 @@ export const privacyContentHtml = `<p>
         </p>
         <p>
           You may exercise any of the above rights by contacting us at
-          compliance@cdaxforex.com or by calling your Account Manager.
+          compliance@cdax.forex or by calling your Account Manager.
         </p>
 
         <h3>10. Contacting us</h3>
@@ -985,13 +985,13 @@ export const privacyContentHtml = `<p>
           any questions about this Privacy Policy, CDAX’s information practices,
           or your dealings with CDAX, you can contact us by calling the customer
           service number located on our website, sending an email to
-          compliance@cdaxforex.com or by writing to us at CDAX Limited, 27 Hope
+          compliance@cdax.forex or by writing to us at CDAX Limited, 27 Hope
           Street, Douglas, Isle of Man, IM1 1AR.
         </p>
         <p>Complaints to the Data Protection Officer</p>
         <p>
           If you believe that we have breached a privacy law with which we
-          should comply, please send an email to compliance@cdaxforex.com. We
+          should comply, please send an email to compliance@cdax.forex. We
           aim to respond in a reasonable time, normally within 30 days. Our
           Compliance team and Data Protection Officer will look after your
           complaint and will give you additional information about how it will

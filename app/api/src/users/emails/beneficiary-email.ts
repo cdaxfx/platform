@@ -26,12 +26,12 @@ export default class BeneficiaryEmail extends BaseEmail<BeneficiaryEmailContext>
     constructor(to: string, context: BeneficiaryEmailContext) {
         super(
             to,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'Beneficiary approval/disapproval',
             'emails/operations/beneficiary/approve',
             context,
             undefined,
-            'backoffice@cdaxforex.com'
+            'backoffice@cdax.forex'
         );
     }
 

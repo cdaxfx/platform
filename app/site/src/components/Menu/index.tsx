@@ -46,7 +46,7 @@ const menuLinks: Array<IMenuLink> = [
   },
   {
     label: "Login",
-    path: "https://app.cdaxforex.com/login",
+    path: "https://cdax.app/login",
   },
 ];
 
@@ -98,7 +98,7 @@ export default function Menu() {
         </ItemsContainer>
         <Link
           target="_blank"
-          href={"https://app.cdaxforex.com/registration"}
+          href={"https://cdax.app/registration"}
           onClick={() => {
             setOpenMenu(false);
           }}

@@ -22,7 +22,7 @@ else {
 
 export default class AccountEmail extends BaseEmail<AccountEmailContext> {
     constructor(to: string, context: AccountEmailContext) {
-        super(to, 'CDAX Forex <noreply@cdaxforex.com>', 'CDAX Forex - Account Approved', 'emails/operations/account/approve', context, undefined, 'backoffice@cdaxforex.com');
+        super(to, 'CDAX Forex <noreply@cdax.forex>', 'CDAX Forex - Account Approved', 'emails/operations/account/approve', context, undefined, 'backoffice@cdax.forex');
     }
 
     getAttachments(): AttachmentJSON[] {

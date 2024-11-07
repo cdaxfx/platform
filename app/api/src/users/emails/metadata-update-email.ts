@@ -21,8 +21,8 @@ else {
 export default class MetadataUpdateEmail extends BaseEmail<MetadataEmailContext> {
     constructor(context: MetadataEmailContext) {
         super(
-            'backoffice@cdaxforex.com',
-            'CDAX Forex <noreply@cdaxforex.com',
+            'backoffice@cdax.forex',
+            'CDAX Forex <noreply@cdax.forex',
             'User requested to update his metadata',
             'emails/registration/update/meta',
             context,

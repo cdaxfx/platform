@@ -19,8 +19,8 @@ else {
 export default class OPNotificationEmail extends BaseEmail<OPNotificationEmailContext> {
     constructor(context: OPNotificationEmailContext) {
         super(
-            'backoffice@cdaxforex.com',
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'backoffice@cdax.forex',
+            'CDAX Forex <noreply@cdax.forex>',
             'OpenPayd Transaction',
             'emails/operations/openpayd/notification',
             context,

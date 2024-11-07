@@ -19,12 +19,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "news.dev.cdaxforex.com",
+        hostname: "news.cdax.forex",
         port: "",
       },
       {
         protocol: "https",
-        hostname: "www.dev.cdaxforex.com",
+        hostname: "cdax.forex",
         port: "",
       },
     ],

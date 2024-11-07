@@ -19,7 +19,7 @@ export default class ForgotPasswordEmail extends BaseEmail<ForgotPasswordEmailCo
     constructor(to: string, password: string) {
         super(
             to,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'CDAX Forex forgot password',
             'emails/registration/forgot/forgot',
             {

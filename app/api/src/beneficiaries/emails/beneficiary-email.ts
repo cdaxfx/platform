@@ -27,7 +27,7 @@ export default class BeneficiaryCreatedEmail extends BaseEmail<BeneficiaryEmailC
     constructor(to: string, context: BeneficiaryEmailContext) {
         super(
             `${process.env.BACKOFFICE_EMAIL ?? to}`,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'CDAX Forex Beneficiary created',
             'emails/operations/beneficiary-created/request',
             context

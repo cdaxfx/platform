@@ -24,7 +24,7 @@ export default class RejectPaymentEmail extends BaseEmail<RejectPaymentEmailCont
     constructor(context: RejectPaymentEmailContext) {
         super(
             context.to,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'Transaction Deny',
             'emails/operations/transactions/rejected',
             context

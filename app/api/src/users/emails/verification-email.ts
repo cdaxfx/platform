@@ -24,7 +24,7 @@ export default class VerificationEmail extends BaseEmail<VerificationEmailContex
     constructor(to: string, user: User, code: string) {
         super(
             to,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'CDAX Forex email verification',
             'emails/registration/verification/verification',
             {

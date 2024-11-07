@@ -25,7 +25,7 @@ export default class RequestAccessEmail extends BaseEmail<RequestAccessEmailCont
     constructor(request: RequestAccessDto) {
         super(
             `${process.env.BACKOFFICE_EMAIL ?? request.email}`,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'CDAX Forex Registration Request',
             'emails/registration/request-access/request',
             {

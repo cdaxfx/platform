@@ -25,12 +25,12 @@ export default class WelcomeEmail extends BaseEmail<WelcomeEmailContext> {
     constructor(to: string, context: WelcomeEmailContext) {
         super(
             to,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'Welcome to CDAX Forex',
             'emails/registration/welcome/welcome',
             context,
             undefined,
-            'backoffice@cdaxforex.com'
+            'backoffice@cdax.forex'
         );
     }
 

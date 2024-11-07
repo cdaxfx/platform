@@ -20,7 +20,7 @@ export default class InvitationEmail extends BaseEmail<InvitationEmailContext> {
     constructor(invitation: Invitation, secret: string) {
         super(
             invitation.email,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'CDAX Forex invitation',
             'emails/registration/invitation/invitation',
             {

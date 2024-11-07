@@ -28,9 +28,9 @@ export default async function RootLayout({
         <meta property="og:description" content="CDAX Forex Control Panel" />
         <meta
           property="og:image"
-          content="https://app.cdaxforex.com/images/snapshot.png"
+          content="https://cdax.app/images/snapshot.png"
         />
-        <meta property="og:url" content="app.cdaxforex.com" />
+        <meta property="og:url" content="cdax.app" />
         <meta property="og:type" content="website" />
         <title>CDAX Forex</title>
       </head>

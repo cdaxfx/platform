@@ -21,7 +21,7 @@ export default class MetadataConfirmEmail extends BaseEmail<MetadataEmailContext
     constructor(context: MetadataEmailContext) {
         super(
             context.emailTo, //to user
-            'CDAX Forex <noreply@cdaxforex.com',
+            'CDAX Forex <noreply@cdax.forex',
             'User requested to update his metadata',
             'emails/registration/update-confirm/meta',
             context,

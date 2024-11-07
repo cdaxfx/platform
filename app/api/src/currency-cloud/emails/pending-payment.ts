@@ -25,7 +25,7 @@ export default class PendingPaymentEmail extends BaseEmail<PendingPaymentEmailCo
     constructor(context: PendingPaymentEmailContext) {
         super(
             context.to,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'An Action needs your approval',
             'emails/operations/transactions/pending',
             {

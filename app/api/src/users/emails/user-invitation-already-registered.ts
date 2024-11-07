@@ -33,7 +33,7 @@ export default class UserInvitationRoleAlreadyRegistered extends BaseEmail<Invit
     constructor(email: string, InvitationData: InvitationData) {
         super(
             email,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'Welcome to CDAX Forex',
             'emails/registration/user-invitation-role/invite-already-registered',
             {

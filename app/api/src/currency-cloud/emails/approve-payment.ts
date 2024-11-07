@@ -22,7 +22,7 @@ export default class ApprovePaymentEmail extends BaseEmail<ApprovePaymentEmailCo
     constructor(context: ApprovePaymentEmailContext) {
         super(
             context.to,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'Transaction approved',
             'emails/operations/transactions/approved',
             context

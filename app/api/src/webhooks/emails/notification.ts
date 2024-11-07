@@ -21,7 +21,7 @@ export default class NotificationEmail extends BaseEmail<NotificationEmailContex
     constructor(to, context: NotificationEmailContext) {
         super(
             to,
-            'CDAX Forex <noreply@cdaxforex.com>',
+            'CDAX Forex <noreply@cdax.forex>',
             'Shufti Pro Notification',
             'emails/operations/webhooks/notification',
             context
